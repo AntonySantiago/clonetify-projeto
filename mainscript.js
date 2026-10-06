@@ -1,344 +1,991 @@
-var usuario = document.getElementById("usuarioinput")
-var senha = document.getElementById("senhainput")
-var logar = document.getElementById("logar")
-var criarconta = document.getElementById("criarconta")
-var criarusuario = document.getElementById("criarusuario")
-var criarsenha = document.getElementById("criarsenha")
-
-const adminuser = "admin"
-const adminsenha = "123456"
-
-var criarcontabotao = document.getElementById("criarcontabutao")
-var csscriarconta = document.querySelector("#criaroconta1")
-var paineladmin = document.querySelector("#paineladmin")
-var caixalogin = document.getElementById("caixaprincipal")
-
-var admin = false
-
-var artistaimg = document.getElementById("artistaimg")
-var musicacapa = document.getElementById("musicaimg")
-var musicamp3 = document.getElementById("musicamp3")
-
-var nomeartista = document.getElementById("nomeartista")
-var nomedamusica = document.getElementById("nomedamusica")
-
-var musicas = document.getElementById("musicas")
-var div2 = document.getElementById("div2")
-
-var adicionarmusica = document.getElementById("adicionarmusica")
-var sair = document.getElementById("sair")
-
-const vetorusuarios = []
-const vetorsenhas = []
-
-var artistas = []
-var proximoid = 0
+import {
+    salvarUsuarios,
+    carregarUsuarios,
+    adicionarMusica,
+    ouvirMusicas,
+    excluirMusica
+} from "./crud.js";
 
 
-criarconta.addEventListener("click", function(){
+// ==========================================
+// ELEMENTOS
+// ==========================================
 
-    csscriarconta.style.display = "block"
-    csscriarconta.style.zIndex = "15"
+// Login
 
-})
+const usuarioinput =
+    document.getElementById("usuarioinput");
+
+const senhainput =
+    document.getElementById("senhainput");
+
+const logar =
+    document.getElementById("logar");
+
+const criarconta =
+    document.getElementById("criarconta");
+
+const criarusuario =
+    document.getElementById("criarusuario");
+
+const criarsenha =
+    document.getElementById("criarsenha");
+
+const criarcontabutao =
+    document.getElementById("criarcontabutao");
+
+const caixaprincipal =
+    document.getElementById("caixaprincipal");
+
+const criaroconta1 =
+    document.getElementById("criaroconta1");
 
 
-criarcontabotao.addEventListener("click", function(){
+// Header
 
-    csscriarconta.style.display = "none"
-    csscriarconta.style.zIndex = "0"
-
-    vetorusuarios.push(criarusuario.value)
-    vetorsenhas.push(criarsenha.value)
-
-    criarusuario.value = ""
-    criarsenha.value = ""
-
-})
+const sair =
+    document.getElementById("sair");
 
 
-logar.addEventListener("click", function(){
+// Admin
 
-    loginadmin()
+const paineladmin =
+    document.getElementById("paineladmin");
 
-})
+const artistaimg =
+    document.getElementById("artistaimg");
+
+const nomeartista =
+    document.getElementById("nomeartista");
+
+const musicaimg =
+    document.getElementById("musicaimg");
+
+const musicamp3 =
+    document.getElementById("musicamp3");
+
+const nomedamusica =
+    document.getElementById("nomedamusica");
+
+const adicionarmusica =
+    document.getElementById("adicionarmusica");
+
+const listamusicasadmin =
+    document.getElementById("listamusicasadmin");
 
 
-function loginadmin(){
+// Biblioteca
 
-    if(usuario.value === adminuser && senha.value === adminsenha){
+const biblioteca =
+    document.getElementById("biblioteca");
 
-        admin = true
+const listaartistas =
+    document.getElementById("listaartistas");
 
-        caixalogin.style.display = "none"
-        caixalogin.style.zIndex = "0"
+const listamusicas =
+    document.getElementById("listamusicas");
 
-        paineladmin.style.display = "block"
-        paineladmin.style.zIndex = "15"
+const nomedoartista =
+    document.getElementById("nomedoartista");
 
-        sair.style.display = "block"
 
-        document.querySelector("main").style.display = "block"
+// Player
 
-        console.log("Administrador logado")
+const player =
+    document.getElementById("player");
 
-        return
+const playercapa =
+    document.getElementById("playercapa");
+
+const playernome =
+    document.getElementById("playernome");
+
+const playerartista =
+    document.getElementById("playerartista");
+
+const playeraudio =
+    document.getElementById("playeraudio");
+
+
+
+// ==========================================
+// VARIÁVEIS
+// ==========================================
+
+let usuarios = [];
+
+let senhas = [];
+
+let usuarioAtual = "";
+
+let admin = false;
+
+let todasMusicas = [];
+
+
+
+// ==========================================
+// ESTADO INICIAL
+// ==========================================
+
+sair.style.display = "none";
+
+paineladmin.style.display = "none";
+
+biblioteca.style.display = "none";
+
+player.style.display = "none";
+
+criaroconta1.style.display = "none";
+
+
+
+// ==========================================
+// CARREGAR USUÁRIOS
+// ==========================================
+
+async function carregarUsuariosFirebase() {
+
+    const dados =
+        await carregarUsuarios();
+
+
+    usuarios =
+        dados.usuarios || [];
+
+
+    senhas =
+        dados.senhas || [];
+
+}
+
+
+
+// ==========================================
+// BOTÃO CRIAR CONTA
+// ==========================================
+
+criarconta.addEventListener(
+    "click",
+    function() {
+
+        criaroconta1.style.display = "block";
+
     }
+);
 
 
-    for(var i = 0; i < vetorusuarios.length; i++){
 
-        if(usuario.value === vetorusuarios[i] && senha.value === vetorsenhas[i]){
+// ==========================================
+// CRIAR CONTA
+// ==========================================
 
-            caixalogin.style.display = "none"
-            caixalogin.style.zIndex = "0"
+criarcontabutao.addEventListener(
+    "click",
+    async function() {
 
-            paineladmin.style.display = "none"
+        const novoUsuario =
+            criarusuario.value.trim();
 
-            sair.style.display = "block"
 
-            document.querySelector("main").style.display = "block"
+        const novaSenha =
+            criarsenha.value.trim();
 
-            console.log("Usuario logado")
 
-            return
+        if (
+            novoUsuario === "" ||
+            novaSenha === ""
+        ) {
+
+            alert(
+                "Preencha usuário e senha."
+            );
+
+            return;
+
+        }
+
+
+        await carregarUsuariosFirebase();
+
+
+        if (
+            usuarios.includes(novoUsuario)
+        ) {
+
+            alert(
+                "Esse usuário já existe."
+            );
+
+            return;
+
+        }
+
+
+        usuarios.push(novoUsuario);
+
+        senhas.push(novaSenha);
+
+
+        await salvarUsuarios(
+            usuarios,
+            senhas
+        );
+
+
+        alert(
+            "Conta criada com sucesso!"
+        );
+
+
+        criarusuario.value = "";
+
+        criarsenha.value = "";
+
+        criaroconta1.style.display =
+            "none";
+
+    }
+);
+
+
+
+// ==========================================
+// LOGIN
+// ==========================================
+
+logar.addEventListener(
+    "click",
+    async function() {
+
+        const usuario =
+            usuarioinput.value.trim();
+
+
+        const senha =
+            senhainput.value.trim();
+
+
+        if (
+            usuario === "" ||
+            senha === ""
+        ) {
+
+            alert(
+                "Digite usuário e senha."
+            );
+
+            return;
+
+        }
+
+
+        // ADMIN
+
+        if (
+            usuario === "admin" &&
+            senha === "123456"
+        ) {
+
+            entrarComoAdmin();
+
+            return;
+
+        }
+
+
+        // USUÁRIO NORMAL
+
+        await carregarUsuariosFirebase();
+
+
+        let encontrou = false;
+
+
+        for (
+            let i = 0;
+            i < usuarios.length;
+            i++
+        ) {
+
+            if (
+                usuarios[i] === usuario &&
+                senhas[i] === senha
+            ) {
+
+                encontrou = true;
+
+                break;
+
+            }
+
+        }
+
+
+        if (encontrou) {
+
+            entrarComoUsuario(
+                usuario
+            );
+
+        } else {
+
+            alert(
+                "Usuário ou senha incorretos."
+            );
+
         }
 
     }
+);
 
-    console.log("Usuario ou senha incorretos")
+
+
+// ==========================================
+// ENTRAR COMO ADMIN
+// ==========================================
+
+function entrarComoAdmin() {
+
+    admin = true;
+
+    usuarioAtual = "admin";
+
+
+    caixaprincipal.style.display =
+        "none";
+
+
+    sair.style.display =
+        "block";
+
+
+    paineladmin.style.display =
+        "block";
+
+
+    biblioteca.style.display =
+        "none";
+
+
+    player.style.display =
+        "none";
+
+
+    carregarMusicasAdmin();
 
 }
 
 
-adicionarmusica.addEventListener("click", function(){
 
-    var artistaimgg = artistaimg.files[0]
-    var musicacapaa = musicacapa.files[0]
-    var musicamp33 = musicamp3.files[0]
+// ==========================================
+// ENTRAR COMO USUÁRIO
+// ==========================================
 
-    var nomedamusicaa = nomedamusica.value
-    var nomeartistaa = nomeartista.value
+function entrarComoUsuario(usuario) {
+
+    admin = false;
+
+    usuarioAtual = usuario;
 
 
-    if(!artistaimgg || !musicacapaa || !musicamp33){
+    caixaprincipal.style.display =
+        "none";
 
-        console.log("Escolha a imagem do artista, a capa e a musica")
 
-        return
+    sair.style.display =
+        "block";
+
+
+    paineladmin.style.display =
+        "none";
+
+
+    biblioteca.style.display =
+        "block";
+
+
+    player.style.display =
+        "flex";
+
+
+    carregarBiblioteca();
+
+}
+
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+sair.addEventListener(
+    "click",
+    function() {
+
+        admin = false;
+
+        usuarioAtual = "";
+
+
+        caixaprincipal.style.display =
+            "flex";
+
+
+        sair.style.display =
+            "none";
+
+
+        paineladmin.style.display =
+            "none";
+
+
+        biblioteca.style.display =
+            "none";
+
+
+        player.style.display =
+            "none";
+
+
+        usuarioinput.value = "";
+
+        senhainput.value = "";
+
+
+        playeraudio.pause();
+
+        playeraudio.src = "";
+
     }
+);
 
 
-    if(nomedamusicaa === "" || nomeartistaa === ""){
 
-        console.log("Digite o nome da musica e o nome do artista")
+// ==========================================
+// ADICIONAR MÚSICA
+// ==========================================
 
-        return
-    }
+adicionarmusica.addEventListener(
+    "click",
+    async function() {
 
-
-    var artistaexistente = artistas.find(function(item){
-
-        return item.nome === nomeartistaa
-
-    })
+        const nome =
+            nomedamusica.value.trim();
 
 
-    if(!artistaexistente){
+        const artista =
+            nomeartista.value.trim();
 
-        artistaexistente = {
 
-            id: proximoid,
-            nome: nomeartistaa,
-            imagem: URL.createObjectURL(artistaimgg),
-            musicas: []
+        const imagemArtista =
+            artistaimg.files[0];
+
+
+        const capa =
+            musicaimg.files[0];
+
+
+        const arquivo =
+            musicamp3.files[0];
+
+
+        if (
+            nome === "" ||
+            artista === "" ||
+            !imagemArtista ||
+            !capa ||
+            !arquivo
+        ) {
+
+            alert(
+                "Preencha todos os campos."
+            );
+
+            return;
 
         }
 
-        proximoid++
 
-        artistas.push(artistaexistente)
+        try {
 
-
-        var artistadiv = document.createElement("div")
-        var artistap1 = document.createElement("p")
-        var artistaimgdiv = document.createElement("img")
+            adicionarmusica.disabled =
+                true;
 
 
-        artistadiv.classList.add("artistadiv")
+            adicionarmusica.innerText =
+                "Enviando...";
 
 
-        artistaimgdiv.src = artistaexistente.imagem
-
-        artistap1.innerText = artistaexistente.nome
-
-
-        artistadiv.appendChild(artistaimgdiv)
-        artistadiv.appendChild(artistap1)
-
-        div2.appendChild(artistadiv)
+            await adicionarMusica(
+                nome,
+                artista,
+                imagemArtista,
+                capa,
+                arquivo
+            );
 
 
-        artistadiv.addEventListener("click", function(){
-
-            abrirArtista(artistaexistente.id)
-
-        })
-
-    }
+            alert(
+                "Música adicionada com sucesso!"
+            );
 
 
-    var musica = {
+            // Limpar campos
 
-        nome: nomedamusicaa,
-        capa: URL.createObjectURL(musicacapaa),
-        arquivo: URL.createObjectURL(musicamp33)
+            nomedamusica.value = "";
 
-    }
+            nomeartista.value = "";
 
+            artistaimg.value = "";
 
-    artistaexistente.musicas.push(musica)
+            musicaimg.value = "";
 
-
-    var player = document.createElement("div")
-
-    player.classList.add("player")
+            musicamp3.value = "";
 
 
-    var imagem = document.createElement("img")
-    var nome = document.createElement("h2")
-    var artista = document.createElement("p")
-    var audio = document.createElement("audio")
+        } catch (erro) {
+
+            console.error(erro);
 
 
-    imagem.src = musica.capa
+            alert(
+                "Erro ao adicionar música."
+            );
 
-    nome.innerText = musica.nome
+        } finally {
 
-    artista.innerText = artistaexistente.nome
-
-    audio.src = musica.arquivo
-    audio.controls = true
-
-
-    player.appendChild(imagem)
-    player.appendChild(nome)
-    player.appendChild(artista)
-    player.appendChild(audio)
+            adicionarmusica.disabled =
+                false;
 
 
-    musicas.appendChild(player)
+            adicionarmusica.innerText =
+                "Adicionar música";
 
-
-    nomedamusica.value = ""
-    nomeartista.value = ""
-
-    musicacapa.value = ""
-    musicamp3.value = ""
-    artistaimg.value = ""
-
-})
-
-
-function abrirArtista(id){
-
-    var artista = artistas.find(function(item){
-
-        return item.id === id
-
-    })
-
-
-    if(!artista){
-
-        return
+        }
 
     }
+);
 
 
-    var paginaartista = document.getElementById("paginaartista")
-    var tituloartista = document.getElementById("tituloartista")
-    var musicasartista = document.getElementById("musicasartista")
 
+// ==========================================
+// CARREGAR MÚSICAS
+// ==========================================
 
-    paginaartista.style.display = "block"
+function carregarBiblioteca() {
 
-    tituloartista.innerText = artista.nome
+    ouvirMusicas(
+        function(lista) {
 
-    musicasartista.innerHTML = ""
+            todasMusicas = lista;
 
+            criarArtistas();
 
-    artista.musicas.forEach(function(musica){
-
-        var player = document.createElement("div")
-
-        player.classList.add("player")
-
-
-        var imagem = document.createElement("img")
-        var nome = document.createElement("h2")
-        var artistaNome = document.createElement("p")
-        var audio = document.createElement("audio")
-
-
-        imagem.src = musica.capa
-
-        nome.innerText = musica.nome
-
-        artistaNome.innerText = artista.nome
-
-        audio.src = musica.arquivo
-        audio.controls = true
-
-
-        player.appendChild(imagem)
-        player.appendChild(nome)
-        player.appendChild(artistaNome)
-        player.appendChild(audio)
-
-
-        musicasartista.appendChild(player)
-
-    })
+        }
+    );
 
 }
 
 
-sair.addEventListener("click", function(){
 
-    caixalogin.style.display = "flex"
-    caixalogin.style.zIndex = "100"
+// ==========================================
+// CRIAR LISTA DE ARTISTAS
+// ==========================================
 
-    document.querySelector("main").style.display = "none"
+function criarArtistas() {
 
-    paineladmin.style.display = "none"
-
-    sair.style.display = "none"
-
-    usuario.value = ""
-    senha.value = ""
-
-})
+    listaartistas.innerHTML = "";
 
 
-var voltarartistas = document.getElementById("voltarartistas")
+    const artistas = [];
 
 
-if(voltarartistas){
+    todasMusicas.forEach(
+        function(musica) {
 
-    voltarartistas.addEventListener("click", function(){
+            if (
+                !artistas.includes(
+                    musica.artista
+                )
+            ) {
 
-        var paginaartista = document.getElementById("paginaartista")
+                artistas.push(
+                    musica.artista
+                );
 
-        paginaartista.style.display = "none"
+            }
 
-    })
+        }
+    );
+
+
+    artistas.forEach(
+        function(nomeArtista) {
+
+            const musicaArtista =
+                todasMusicas.find(
+                    function(musica) {
+
+                        return (
+                            musica.artista ===
+                            nomeArtista
+                        );
+
+                    }
+                );
+
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "artista";
+
+
+            const imagem =
+                document.createElement(
+                    "img"
+                );
+
+
+            imagem.src =
+                musicaArtista.imagemArtista;
+
+
+            const nome =
+                document.createElement(
+                    "h2"
+                );
+
+
+            nome.innerText =
+                nomeArtista;
+
+
+            div.appendChild(imagem);
+
+            div.appendChild(nome);
+
+
+            listaartistas.appendChild(
+                div
+            );
+
+
+            div.addEventListener(
+                "click",
+                function() {
+
+                    mostrarMusicas(
+                        nomeArtista
+                    );
+
+                }
+            );
+
+        }
+    );
 
 }
 
 
-if("serviceWorker" in navigator){
 
-    navigator.serviceWorker.register("./service-worker.js")
+// ==========================================
+// MOSTRAR MÚSICAS DO ARTISTA
+// ==========================================
+
+function mostrarMusicas(nomeArtista) {
+
+    listamusicas.innerHTML = "";
+
+
+    nomedoartista.innerText =
+        nomeArtista;
+
+
+    const musicas =
+        todasMusicas.filter(
+            function(musica) {
+
+                return (
+                    musica.artista ===
+                    nomeArtista
+                );
+
+            }
+        );
+
+
+    musicas.forEach(
+        function(musica) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "musica";
+
+
+            const imagem =
+                document.createElement(
+                    "img"
+                );
+
+
+            imagem.src =
+                musica.capa;
+
+
+            const nome =
+                document.createElement(
+                    "h2"
+                );
+
+
+            nome.innerText =
+                musica.nome;
+
+
+            const artista =
+                document.createElement(
+                    "p"
+                );
+
+
+            artista.innerText =
+                musica.artista;
+
+
+            div.appendChild(imagem);
+
+            div.appendChild(nome);
+
+            div.appendChild(artista);
+
+
+            listamusicas.appendChild(
+                div
+            );
+
+
+            div.addEventListener(
+                "click",
+                function() {
+
+                    tocarMusica(
+                        musica
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+
+// ==========================================
+// PLAYER
+// ==========================================
+
+function tocarMusica(musica) {
+
+    playercapa.src =
+        musica.capa;
+
+
+    playernome.innerText =
+        musica.nome;
+
+
+    playerartista.innerText =
+        musica.artista;
+
+
+    playeraudio.src =
+        musica.arquivo;
+
+
+    playeraudio.play();
+
+}
+
+
+
+// ==========================================
+// PAINEL ADMIN
+// ==========================================
+
+function carregarMusicasAdmin() {
+
+    ouvirMusicas(
+        function(lista) {
+
+            todasMusicas = lista;
+
+            mostrarMusicasAdmin();
+
+        }
+    );
+
+}
+
+
+
+// ==========================================
+// LISTA DE MÚSICAS DO ADMIN
+// ==========================================
+
+function mostrarMusicasAdmin() {
+
+    listamusicasadmin.innerHTML =
+        "";
+
+
+    todasMusicas.forEach(
+        function(musica) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.className =
+                "musicaadmin";
+
+
+            const imagem =
+                document.createElement(
+                    "img"
+                );
+
+
+            imagem.src =
+                musica.capa;
+
+
+            const informacoes =
+                document.createElement(
+                    "div"
+                );
+
+
+            const nome =
+                document.createElement(
+                    "h2"
+                );
+
+
+            nome.innerText =
+                musica.nome;
+
+
+            const artista =
+                document.createElement(
+                    "p"
+                );
+
+
+            artista.innerText =
+                musica.artista;
+
+
+            const botao =
+                document.createElement(
+                    "button"
+                );
+
+
+            botao.innerText =
+                "Excluir";
+
+
+            informacoes.appendChild(
+                nome
+            );
+
+
+            informacoes.appendChild(
+                artista
+            );
+
+
+            div.appendChild(
+                imagem
+            );
+
+
+            div.appendChild(
+                informacoes
+            );
+
+
+            div.appendChild(
+                botao
+            );
+
+
+            listamusicasadmin.appendChild(
+                div
+            );
+
+
+            botao.addEventListener(
+                "click",
+                async function() {
+
+                    const confirmar =
+                        confirm(
+                            "Deseja excluir esta música?"
+                        );
+
+
+                    if (!confirmar) {
+
+                        return;
+
+                    }
+
+
+                    try {
+
+                        await excluirMusica(
+                            musica.id
+                        );
+
+
+                        alert(
+                            "Música excluída."
+                        );
+
+
+                    } catch (erro) {
+
+                        console.error(
+                            erro
+                        );
+
+
+                        alert(
+                            "Erro ao excluir música."
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
 
 }

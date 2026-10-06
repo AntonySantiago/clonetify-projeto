@@ -1,314 +1,697 @@
+
+/* ==========================================
+   RESET
+========================================== */
+
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
 }
 
 body {
-    min-height: 100vh;
-    background: linear-gradient(135deg, #120807, #24100d, #3b1710);
+    font-family: Arial, Helvetica, sans-serif;
+    background: #0a0706;
     color: white;
-    font-family: Arial, sans-serif;
+    padding-bottom: 120px;
 }
 
+
+/* ==========================================
+   HEADER
+========================================== */
+
 #header {
-    position: relative;
-    z-index: 20;
-    height: 75px;
+    width: 100%;
+    min-height: 70px;
+    padding: 15px 30px;
+
     display: flex;
     align-items: center;
-    padding: 0 40px;
+    gap: 15px;
+
     background: #0d0a09;
     border-bottom: 1px solid #542018;
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 #clonetifytitulo {
-    color: #ff5a36;
-    font-size: 28px;
+    color: #ff7048;
+    font-size: 25px;
+    margin-right: 20px;
 }
 
-#home {
-    margin-left: 40px;
-    background: #17100e;
-    border: 1px solid #542018;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 8px;
-}
+#header button {
+    padding: 10px 16px;
 
-#barra\ de\ procura {
-    margin-left: 30px;
-    width: 300px;
-    height: 38px;
-    padding: 0 15px;
-    background: #17100e;
-    border: 1px solid #6b291c;
-    border-radius: 20px;
-    color: white;
-}
-
-#pesquisabotao {
-    margin-left: 10px;
-    height: 38px;
-    padding: 0 20px;
     background: #e94f2d;
+    color: white;
+
     border: none;
-    border-radius: 20px;
+    border-radius: 7px;
+
     cursor: pointer;
+    font-size: 14px;
+
+    transition: 0.2s;
 }
+
+#header button:hover {
+    background: #ff5a36;
+}
+
+#barradeprocura {
+    flex: 1;
+    max-width: 450px;
+
+    padding: 11px 15px;
+
+    background: #17100e;
+    color: white;
+
+    border: 1px solid #542018;
+    border-radius: 8px;
+
+    outline: none;
+}
+
+#barradeprocura:focus {
+    border-color: #e94f2d;
+}
+
+#barradeprocura::placeholder {
+    color: #8c7d78;
+}
+
+
+/* ==========================================
+   LOGIN
+========================================== */
 
 #caixaprincipal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10;
-
-    background-image:linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)), url("icones/Contratorpedeiro\ ao\ pôr\ do\ sol\ ardente.png");
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
+    min-height: calc(100vh - 70px);
 
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 30px;
 }
 
 #caixa {
-    background: #17100e;
-    width: 380px;
-    height: 320px;
+    width: 100%;
+    max-width: 400px;
+
     padding: 35px;
+
+    background: #17100e;
+    border: 1px solid #542018;
     border-radius: 15px;
-    border: 1px solid #632619;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
 }
 
 #caixa h1 {
-    font-size: 18px;
-    margin-top: 15px;
-    margin-bottom: 8px;
+    text-align: center;
     color: #ff7048;
+    margin-bottom: 25px;
 }
 
 #caixa input {
     width: 100%;
-    height: 40px;
-    padding: 0 12px;
+
+    padding: 13px;
+    margin-bottom: 12px;
+
     background: #0d0a09;
-    border: 1px solid #542018;
-    border-radius: 7px;
     color: white;
+
+    border: 1px solid #542018;
+    border-radius: 8px;
+
     outline: none;
 }
 
 #caixa input:focus {
-    border-color: #ff5a36;
+    border-color: #e94f2d;
+}
+
+#caixa input::placeholder {
+    color: #8c7d78;
+}
+
+#caixa button {
+    width: 100%;
+
+    padding: 12px;
+    margin-top: 8px;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+    font-size: 15px;
+
+    color: white;
 }
 
 #logar {
-    width: 100%;
-    margin-top: 25px;
-    height: 42px;
-    border: none;
-    border-radius: 8px;
     background: #e94f2d;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+}
+
+#logar:hover {
+    background: #ff5a36;
 }
 
 #criarconta {
-    position: absolute;
-    margin-top: 300px;
-    background: transparent;
-    border: none;
-    color: #ff7048;
-    cursor: pointer;
+    background: #542018;
+}
+
+#criarconta:hover {
+    background: #632619;
 }
 
 #criaroconta1 {
-    display: none;
-    position: fixed;
-    z-index: 15;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    margin-top: 25px;
+    padding-top: 20px;
 
-    width: 350px;
-    padding: 35px;
-    background: #17100e;
-    border: 1px solid #632619;
-    border-radius: 15px;
+    border-top: 1px solid #542018;
 }
 
-#criaroconta1 h1 {
-    font-size: 18px;
+#criaroconta1 h2 {
     color: #ff7048;
-    margin-bottom: 8px;
-}
-
-#criaroconta1 input {
-    width: 100%;
-    height: 40px;
     margin-bottom: 15px;
-    background: #0d0a09;
-    border: 1px solid #542018;
-    border-radius: 7px;
-    color: white;
 }
 
 #criarcontabutao {
-    width: 100%;
-    height: 40px;
-    background: #e94f2d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
+    background: #8f241b;
 }
 
+#criarcontabutao:hover {
+    background: #c73524;
+}
+
+
+/* ==========================================
+   CONTEÚDO
+========================================== */
+
+main {
+    width: 100%;
+    padding: 30px 20px;
+}
+
+
+/* ==========================================
+   PAINEL ADMIN
+========================================== */
+
 #paineladmin {
-    display: none;
-    position: fixed;
-    z-index: 15;
+    width: 100%;
+    max-width: 700px;
 
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-
-    padding: 35px;
+    margin: 0 auto;
+    padding: 30px;
 
     background: #17100e;
-    border: 1px solid #7a2d1d;
-    border-radius: 18px;
-
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+    border: 1px solid #542018;
+    border-radius: 15px;
 }
 
 #paineladmin h1 {
-    font-size: 16px;
-    margin-top: 18px;
-    margin-bottom: 8px;
     color: #ff7048;
+    margin-bottom: 25px;
 }
 
-#paineladmin input[type="text"] {
-    width: 100%;
-    height: 40px;
-    padding: 0 12px;
-
-    background: #0d0a09;
-    border: 1px solid #542018;
-    border-radius: 7px;
-
+#paineladmin h2 {
     color: white;
-    outline: none;
+    margin-top: 20px;
+    margin-bottom: 15px;
 }
 
+#paineladmin label {
+    display: block;
+
+    color: #a89b97;
+
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+#paineladmin input[type="text"],
 #paineladmin input[type="file"] {
     width: 100%;
+
     padding: 10px;
 
     background: #0d0a09;
+    color: white;
+
     border: 1px solid #542018;
     border-radius: 7px;
-
-    color: #cfcfcf;
 }
 
-#paineladmin input:focus {
-    border-color: #ff5a36;
+#paineladmin input[type="text"]:focus {
+    outline: none;
+    border-color: #e94f2d;
 }
 
 #adicionarmusica {
     width: 100%;
-    height: 45px;
+
     margin-top: 25px;
+    padding: 12px;
 
     background: #e94f2d;
-    color: white;
 
     border: none;
-    border-radius: 9px;
+    border-radius: 8px;
 
-    font-size: 15px;
-    font-weight: bold;
+    color: white;
 
     cursor: pointer;
+    font-size: 16px;
+
+    transition: 0.2s;
 }
 
 #adicionarmusica:hover {
-    background: #ff6240;
+    background: #ff5a36;
 }
 
-#musicas {
-    margin-top: 40px;
+#adicionarmusica:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#paineladmin hr {
+    margin: 30px 0;
+
+    border: none;
+    border-top: 1px solid #542018;
+}
+
+
+/* ==========================================
+   MÚSICAS DO ADMIN
+========================================== */
+
+#listamusicasadmin {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 12px;
 }
 
-.player {
+.musicaadmin {
     display: flex;
     align-items: center;
     gap: 15px;
 
-    padding: 15px;
+    padding: 12px;
 
-    background: #17100e;
+    background: #0d0a09;
+
     border: 1px solid #542018;
-    border-radius: 12px;
+    border-radius: 10px;
 }
 
-.player img {
-    width: 70px;
-    height: 70px;
+.musicaadmin img {
+    width: 65px;
+    height: 65px;
+
     object-fit: cover;
-    border-radius: 8px;
+
+    border-radius: 7px;
 }
 
-.player h2 {
+.musicaadmin div {
+    flex: 1;
+}
+
+.musicaadmin h2 {
+    margin: 0 !important;
     font-size: 17px;
-    color: white;
 }
 
-.player p {
+.musicaadmin p {
+    margin-top: 5px;
     color: #a89b97;
 }
 
-.player audio {
-    margin-left: auto;
-}
+.musicaadmin button {
+    padding: 9px 15px;
 
-#div2 {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-}
+    background: #8f241b;
 
-.artistadiv {
-    width: 130px;
-    text-align: center;
+    border: none;
+    border-radius: 7px;
+
+    color: white;
+
     cursor: pointer;
 }
 
-.artistadiv img {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    object-fit: cover;
+.musicaadmin button:hover {
+    background: #c73524;
 }
 
-.artistadiv p {
-    margin-top: 8px;
+
+/* ==========================================
+   BIBLIOTECA
+========================================== */
+
+#biblioteca {
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto;
+    padding: 30px;
+
+    background: #17100e;
+
+    border: 1px solid #542018;
+    border-radius: 15px;
+}
+
+#biblioteca > h1 {
+    color: #ff7048;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+
+/* ==========================================
+   ARTISTAS
+========================================== */
+
+#listaartistas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.artista {
+    width: 150px;
+
+    padding: 15px;
+
+    background: #0d0a09;
+
+    border: 1px solid #542018;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    text-align: center;
+}
+
+.artista:hover {
+    background: #24100d;
+    border-color: #e94f2d;
+    transform: translateY(-3px);
+}
+
+.artista img {
+    width: 100px;
+    height: 100px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    border: 2px solid #632619;
+}
+
+.artista h2 {
+    margin-top: 10px;
+
     color: white;
+    font-size: 16px;
 }
-#voltartologin {
-    display: none;
+
+
+/* ==========================================
+   MÚSICAS
+========================================== */
+
+#musicasescolhidas {
+    margin-top: 30px;
 }
+
+#nomedoartista {
+    color: #ff7048;
+    margin-bottom: 15px;
+}
+
+#listamusicas {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(220px, 1fr));
+
+    gap: 15px;
+}
+
+.musica {
+    padding: 15px;
+
+    background: #0d0a09;
+
+    border: 1px solid #542018;
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.musica:hover {
+    border-color: #e94f2d;
+    background: #24100d;
+    transform: translateY(-3px);
+}
+
+.musica img {
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+}
+
+.musica h2 {
+    color: white;
+
+    font-size: 17px;
+
+    margin-top: 10px;
+}
+
+.musica p {
+    color: #a89b97;
+
+    margin-top: 5px;
+}
+
+
+/* ==========================================
+   PLAYER
+========================================== */
+
+#player {
+    position: fixed;
+
+    bottom: 0;
+    left: 0;
+
+    width: 100%;
+
+    min-height: 90px;
+
+    padding: 15px 30px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    background: #0d0a09;
+
+    border-top: 1px solid #632619;
+
+    box-shadow:
+        0 -10px 30px rgba(0, 0, 0, 0.5);
+
+    z-index: 50;
+}
+
+#playercapa {
+    width: 65px;
+    height: 65px;
+
+    object-fit: cover;
+
+    border-radius: 7px;
+
+    border: 1px solid #542018;
+}
+
+#playerinformacoes {
+    flex: 1;
+}
+
+#playerinformacoes h2 {
+    color: white;
+
+    font-size: 17px;
+
+    margin-bottom: 4px;
+}
+
+#playerinformacoes p {
+    color: #a89b97;
+
+    font-size: 14px;
+
+    margin-bottom: 8px;
+}
+
+#playeraudio {
+    width: 100%;
+
+    max-width: 600px;
+
+    height: 35px;
+}
+
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+footer {
+    text-align: center;
+
+    padding: 25px;
+
+    color: #665955;
+}
+
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media (max-width: 800px) {
+
+    #header {
+        flex-wrap: wrap;
+        padding: 15px;
+    }
+
+    #clonetifytitulo {
+        width: 100%;
+        text-align: center;
+        margin-right: 0;
+    }
+
+    #barradeprocura {
+        order: 3;
+        width: 100%;
+        max-width: none;
+    }
+
+    main {
+        padding: 20px 10px;
+    }
+
+    #paineladmin,
+    #biblioteca {
+        padding: 20px;
+    }
+
+    .artista {
+        width: 120px;
+    }
+
+    .artista img {
+        width: 80px;
+        height: 80px;
+    }
+
+    #listamusicas {
+        grid-template-columns:
+            repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .musicaadmin {
+        flex-wrap: wrap;
+    }
+
+    .musicaadmin button {
+        width: 100%;
+    }
+
+    #player {
+        padding: 10px 15px;
+        gap: 10px;
+    }
+
+    #playercapa {
+        width: 55px;
+        height: 55px;
+    }
+
+    #playerinformacoes h2 {
+        font-size: 14px;
+    }
+
+    #playerinformacoes p {
+        font-size: 12px;
+    }
+}
+
+
+/* ==========================================
+   TELAS MUITO PEQUENAS
+========================================== */
+
+@media (max-width: 450px) {
+
+    #caixaprincipal {
+        padding: 15px;
+    }
+
+    #caixa {
+        padding: 25px 20px;
+    }
+
+    #listaartistas {
+        justify-content: center;
+    }
+
+    #listamusicas {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .musica {
+        padding: 10px;
+    }
+
+    .musica h2 {
+        font-size: 14px;
+    }
+}
+

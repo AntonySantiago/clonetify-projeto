@@ -1,105 +1,215 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>clonetify</title>
-    <link rel="icon" href="icones/" type="">
+
+    <title>Clonetify</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- HEADER -->
     <header id="header">
 
-        <img src="" alt="" id="clonetifyimg">
+        <h1 id="clonetifytitulo">Clonetify</h1>
 
-        <h1 id="clonetifytitulo"></h1>
+        <button id="home">Home</button>
 
-        <button id="home"></button>
+        <input
+            type="text"
+            id="barradeprocura"
+            placeholder="Pesquisar..."
+        >
 
-        <input type="text" id="barra de procura">
+        <button id="pesquisabotao">Pesquisar</button>
 
-        <button id="pesquisabotao"></button>
+        <button id="sair">Sair</button>
 
-        <button id="sair">sair da conta</button>
     </header>
 
 
+    <!-- TELA DE LOGIN -->
     <div id="caixaprincipal">
 
         <div id="caixa">
 
-            <h1 id="usuario">usuario</h1>
+            <h1>Clonetify</h1>
 
-            <input type="text" id="usuarioinput">
+            <input
+                type="text"
+                id="usuarioinput"
+                placeholder="Usuário"
+            >
 
-            <h1 id="senha">senha secreta</h1>
+            <input
+                type="password"
+                id="senhainput"
+                placeholder="Senha"
+            >
 
-            <input type="text" id="senhainput">
+            <button id="logar">Entrar</button>
 
-            <button id="logar">login</button>
+            <button id="criarconta">
+                Criar conta
+            </button>
+
+
+            <!-- CRIAR CONTA -->
+
+            <div id="criaroconta1">
+
+                <h2>Criar conta</h2>
+
+                <input
+                    type="text"
+                    id="criarusuario"
+                    placeholder="Novo usuário"
+                >
+
+                <input
+                    type="password"
+                    id="criarsenha"
+                    placeholder="Nova senha"
+                >
+
+                <button id="criarcontabutao">
+                    Criar
+                </button>
+
+            </div>
 
         </div>
-        <button id="criarconta">criar conta</button>
 
     </div>
 
 
-    <div id="criaroconta1">
+    <!-- CONTEÚDO PRINCIPAL -->
 
-        <h1 id="usuariocriar">crie seu usuario</h1>
+    <main>
 
-        <input type="text" id="criarusuario">
 
-        <h1 id="senharcriar">crie sua senha</h1>
+        <!-- PAINEL DO ADMIN -->
 
-        <input type="text" id="criarsenha">
+        <section id="paineladmin">
 
-        <button id="criarcontabutao">criar conta</button>
+            <h1>Painel do Administrador</h1>
+
+            <h2>Adicionar música</h2>
+
+            <label>Imagem do artista</label>
+            <input
+                type="file"
+                id="artistaimg"
+                accept="image/*"
+            >
+
+            <label>Nome do artista</label>
+            <input
+                type="text"
+                id="nomeartista"
+                placeholder="Nome do artista"
+            >
+
+            <label>Capa da música</label>
+            <input
+                type="file"
+                id="musicaimg"
+                accept="image/*"
+            >
+
+            <label>Arquivo da música</label>
+            <input
+                type="file"
+                id="musicamp3"
+                accept="audio/*"
+            >
+
+            <label>Nome da música</label>
+            <input
+                type="text"
+                id="nomedamusica"
+                placeholder="Nome da música"
+            >
+
+            <button id="adicionarmusica">
+                Adicionar música
+            </button>
+
+            <hr>
+
+            <h2>Músicas cadastradas</h2>
+
+            <div id="listamusicasadmin"></div>
+
+        </section>
+
+
+
+        <!-- BIBLIOTECA DO USUÁRIO -->
+
+        <section id="biblioteca">
+
+            <h1>Artistas</h1>
+
+            <div id="listaartistas"></div>
+
+
+            <div id="musicasescolhidas">
+
+                <h2 id="nomedoartista"></h2>
+
+                <div id="listamusicas"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- PLAYER -->
+
+    <div id="player">
+
+        <img
+            id="playercapa"
+            src=""
+            alt="Capa"
+        >
+
+        <div id="playerinformacoes">
+
+            <h2 id="playernome">
+                Nenhuma música selecionada
+            </h2>
+
+            <p id="playerartista"></p>
+
+            <audio
+                id="playeraudio"
+                controls
+            ></audio>
+
+        </div>
 
     </div>
 
-<main>
-
-    <div id="paineladmin">
-
-        <h1>fazer upload da img artista</h1>
-        <input type="file" id="artistaimg">
-
-        <h1>nome artista</h1>
-        <input type="text" id="nomeartista">
-
-        <h1>fazer upload da capa da musica</h1>
-        <input type="file" id="musicaimg">
-
-        <h1>fazer upload da musica</h1>
-        <input type="file" id="musicamp3">
-
-        <h1>nome da musica</h1>
-        <input type="text" id="nomedamusica">
-
-        <button id="adicionarmusica">
-            adicionar musica
-        </button>
-
-        <div id="div1"></div>
-
-        <div id="div2"></div>
-
-    </div>
-
-    <div id="musicas"></div>
-
-</main>
 
 
+    <footer>
+
+        <p>Clonetify</p>
+
+    </footer>
 
 
-    <footer></footer>
-
-    <script src="mainscript.js"></script>
+    <script type="module" src="mainscript.js"></script>
 
 </body>
+
 </html>
