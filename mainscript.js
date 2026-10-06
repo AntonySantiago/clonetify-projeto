@@ -107,11 +107,6 @@ const playeraudio =
     document.getElementById("playeraudio");
 
 
-
-// ==========================================
-// VARIÁVEIS
-// ==========================================
-
 let usuarios = [];
 
 let senhas = [];
@@ -121,12 +116,6 @@ let usuarioAtual = "";
 let admin = false;
 
 let todasMusicas = [];
-
-
-
-// ==========================================
-// ESTADO INICIAL
-// ==========================================
 
 sair.style.display = "none";
 
@@ -139,10 +128,6 @@ player.style.display = "none";
 criaroconta1.style.display = "none";
 
 
-
-// ==========================================
-// CARREGAR USUÁRIOS
-// ==========================================
 
 async function carregarUsuariosFirebase() {
 
@@ -176,9 +161,6 @@ criarconta.addEventListener(
 
 
 
-// ==========================================
-// CRIAR CONTA
-// ==========================================
 
 criarcontabutao.addEventListener(
     "click",
@@ -250,9 +232,6 @@ criarcontabutao.addEventListener(
 
 
 
-// ==========================================
-// LOGIN
-// ==========================================
 
 logar.addEventListener(
     "click",
@@ -280,8 +259,7 @@ logar.addEventListener(
         }
 
 
-        // ADMIN
-
+       
         if (
             usuario === "admin" &&
             senha === "123456"
@@ -294,7 +272,6 @@ logar.addEventListener(
         }
 
 
-        // USUÁRIO NORMAL
 
         await carregarUsuariosFirebase();
 
@@ -341,10 +318,6 @@ logar.addEventListener(
 
 
 
-// ==========================================
-// ENTRAR COMO ADMIN
-// ==========================================
-
 function entrarComoAdmin() {
 
     admin = true;
@@ -375,12 +348,6 @@ function entrarComoAdmin() {
     carregarMusicasAdmin();
 
 }
-
-
-
-// ==========================================
-// ENTRAR COMO USUÁRIO
-// ==========================================
 
 function entrarComoUsuario(usuario) {
 
@@ -413,11 +380,6 @@ function entrarComoUsuario(usuario) {
 
 }
 
-
-
-// ==========================================
-// LOGOUT
-// ==========================================
 
 sair.addEventListener(
     "click",
@@ -460,11 +422,6 @@ sair.addEventListener(
     }
 );
 
-
-
-// ==========================================
-// ADICIONAR MÚSICA
-// ==========================================
 
 adicionarmusica.addEventListener(
     "click",
@@ -568,11 +525,6 @@ adicionarmusica.addEventListener(
 );
 
 
-
-// ==========================================
-// CARREGAR MÚSICAS
-// ==========================================
-
 function carregarBiblioteca() {
 
     ouvirMusicas(
@@ -587,11 +539,6 @@ function carregarBiblioteca() {
 
 }
 
-
-
-// ==========================================
-// CRIAR LISTA DE ARTISTAS
-// ==========================================
 
 function criarArtistas() {
 
@@ -694,10 +641,6 @@ function criarArtistas() {
 
 
 
-// ==========================================
-// MOSTRAR MÚSICAS DO ARTISTA
-// ==========================================
-
 function mostrarMusicas(nomeArtista) {
 
     listamusicas.innerHTML = "";
@@ -792,11 +735,6 @@ function mostrarMusicas(nomeArtista) {
 }
 
 
-
-// ==========================================
-// PLAYER
-// ==========================================
-
 function tocarMusica(musica) {
 
     playercapa.src =
@@ -819,12 +757,6 @@ function tocarMusica(musica) {
 
 }
 
-
-
-// ==========================================
-// PAINEL ADMIN
-// ==========================================
-
 function carregarMusicasAdmin() {
 
     ouvirMusicas(
@@ -839,11 +771,6 @@ function carregarMusicasAdmin() {
 
 }
 
-
-
-// ==========================================
-// LISTA DE MÚSICAS DO ADMIN
-// ==========================================
 
 function mostrarMusicasAdmin() {
 
