@@ -1,0 +1,22 @@
+{
+    "name": "Clonetify",
+    "short_name": "Clonetify",
+    "description": "Aplicativo de músicas Clonetify",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#120807",
+    "theme_color": "#ff5a36",
+    "orientation": "portrait",
+    "icons": [
+        {
+            "src": "./icones/icon500x500.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        },
+        {
+            "src": "./icones/icon192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ]
+}
